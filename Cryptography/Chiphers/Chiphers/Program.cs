@@ -11,6 +11,7 @@ class Program
 {
     public static void Main(string[] args)
     {
+        DiffiHelman();
         Elgamal();
         RsaBouncyCastle();
         RSA();
@@ -183,6 +184,8 @@ class Program
         var aliceKey = diffieHellman.DeriveKeyMaterial(bob.PublicKey);
         var bobKey = bob.DeriveKeyMaterial(diffieHellman.PublicKey);
 
+        Console.WriteLine($"Bob secret key: {string.Join("", bobKey.Select(bt=> $"{bt.ToString()} "))}");
+        Console.WriteLine($"Alice secret key: {string.Join("", aliceKey.Select(bt => $"{bt.ToString()} "))}");
     }
 
 
