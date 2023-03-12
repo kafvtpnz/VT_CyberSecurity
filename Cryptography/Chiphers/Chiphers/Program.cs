@@ -11,6 +11,7 @@ class Program
 {
     public static void Main(string[] args)
     {
+        HashAlgorithm();
         DiffiHelman();
         Elgamal();
         RsaBouncyCastle();
@@ -186,6 +187,24 @@ class Program
 
         Console.WriteLine($"Bob secret key: {string.Join("", bobKey.Select(bt=> $"{bt.ToString()} "))}");
         Console.WriteLine($"Alice secret key: {string.Join("", aliceKey.Select(bt => $"{bt.ToString()} "))}");
+    }
+
+    public static void HashAlgorithm()
+    {
+        string text = "Я читаю канал VT_CyberSecurity";
+        var md5 = System.Security.Cryptography.MD5.Create();
+        var sha1 = System.Security.Cryptography.SHA1.Create();
+        var sha256 = System.Security.Cryptography.SHA256.Create();
+        var array = Encoding.UTF8.GetBytes(text);
+        Console.WriteLine($"Base text: {text}");
+        Console.WriteLine($"MD5: {string.Join(" ", md5.ComputeHash(array))} - Length: 16 byte");
+        Console.WriteLine($"SHA1: {string.Join(" ", sha1.ComputeHash(array))} - Length: 20 byte");
+        Console.WriteLine($"SHA256: {string.Join(" ", sha256.ComputeHash(array))} - Length: 32 byte");
+        Org.BouncyCastle.Crypto.Digests.MD5Digest mD5Digest = new Org.BouncyCastle.Crypto.Digests.MD5Digest();
+        mD5Digest.BlockUpdate(array, 0, array.Length);
+        var output = new byte[mD5Digest.GetDigestSize()];
+        mD5Digest.DoFinal(output);
+        Console.WriteLine($"BouncyCastle MD5: {string.Join(" ", output.Length)}");
     }
 
 
